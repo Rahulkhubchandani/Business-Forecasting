@@ -1,0 +1,103 @@
+---
+title: "Homework-2"
+author: "Rahul Khubchandani"
+date: "9/19/2022"
+output: html_document
+---
+
+```{r}
+
+library(readxl)
+Typical_Employee_Survey_Data <- read_excel("C:/Users/rk1067/Downloads/Typical_Employee_Survey_Data.xlsx")
+View(Typical_Employee_Survey_Data)
+
+```
+```{r}
+Survey = Typical_Employee_Survey_Data
+# Explore Data Frame
+names(Survey)
+ncol(Survey)
+nrow(Survey)
+dim(Survey)
+head(Survey)
+tail(Survey)
+str(Survey)
+class(Survey$Gender)
+Survey$Gender <- as.factor(Survey$Gender)
+class(Survey$Gender)
+str(Survey)
+# Column
+Survey$Promotion
+Survey[6]
+Survey[c("Proud")]
+Survey[3:7]
+Survey[c("Characteristics","Satisfied")]
+# Rows
+Survey[5,]
+
+# Combined
+Survey[1:3,c("Age")]
+Survey[3:7,7:9]
+
+#Levels
+
+Survey$Gender
+table(Survey$Proud)
+table(Survey$Satisfied)
+table(Survey$Age, Survey$`Years worked`)
+
+# Filtering
+
+Survey[Survey$Proud == "4",]
+
+# Ordering
+
+Survey[order(Survey$Age),]
+Survey[order(-Survey$Age),]
+
+# Change Column Name
+names(Survey)[3] <- "Satisfy"
+head(Survey)
+
+
+# Graphing
+barplot(Survey$Promotion)
+barplot(Survey$Promotion, main = "Promotion Vs Age", xlab = "Age", ylab = "Promotion", col = "Red", names.arg = Survey$Age)
+#pie(Survey$Proud)
+pie(Survey$Proud,label = Survey$`Years worked`, main = "Yearsworked Vs How Proud Employee Is")
+stem(Survey$`Years worked`)
+stem(Survey$Age)
+hist(Survey$Age)
+boxplot(Survey$Age)
+boxplot(Survey$Gender,Survey$Promotion)
+
+## Summary Stats
+
+min(Survey$Age)
+max(Survey$Age)
+range(Survey$Age)
+StatRange = max(Survey$Age) - min(Survey$Age)
+StatRange
+mean(Survey$Promotion)
+sd(Survey$Proud)
+var(Survey$Age)
+sqrt(var(Survey$Age))
+fivenum(Survey$Age)
+IQR(Survey$Age)
+quantile(Survey$Age)
+summary(Survey$Age)
+boxplot.stats(Survey$Age)
+boxplot.stats(Survey$Age)$out
+
+# Data Frame Summary
+
+summary(Survey)
+
+by(Survey$Age,Survey$Gender,mean)
+by(Survey$Age,Survey$Gender,sd)
+by(Survey$Age,Survey$Gender,summary)
+
+aggregate(Survey$Age,list("Type" = Survey$Gender),median)
+aggregate(Survey$Age,list("Type" = Survey$Gender),summary)
+
+```
