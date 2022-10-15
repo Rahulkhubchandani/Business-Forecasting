@@ -1,0 +1,51 @@
+---
+title: "BF Assignment 5"
+author: "Rahul Khubchandani"
+date: "10/12/2022"
+output: html_document
+---
+
+```{r}
+library(fpp)
+library(fpp2)
+
+# Returns the first parts of a vector, matrix, table, data frame or function 
+head(qauselec)
+
+# Plot function is used to draw points 
+plot(qauselec)
+
+# stl function decomposes a time series into seasonal, trend and irregular components using loess
+# s. window controls how rapidly the seasonal component can change. smoothing is effectively replaced by takin the mean
+stl_decomp <- stl(qauselec,s.window ="periodic")
+
+# plotting the variable to which we assigned the stl function result 
+plot(stl_decomp)
+attributes(stl_decomp)
+
+# seasadj function returns seasonally adjusted data constructed by removing the seasonal component.
+seasadj(stl_decomp)
+
+# Plot a line on the graph
+plot(qauselec)
+lines(seasadj(stl_decomp), col="Red")
+
+# Default period forecast
+f_stl <- forecast(stl_decomp)
+
+# In the variable h we can pass no. of data points that are to be forecasted.
+f_stl <- forecast(stl_decomp,h=15)
+f_stl
+plot(f_stl)
+
+# Decompose  function decomposes a time series into seasonal, trend and irregular components
+# There is more than one way to do things
+decomp_elec <- decompose(qauselec)
+
+# Each one shows different attributes 
+attributes(decomp_elec)
+seasadj(decomp_elec)
+
+```
+
+
