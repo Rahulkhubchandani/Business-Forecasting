@@ -1,0 +1,30 @@
+---
+title: "ARIMA Assignment"
+author: "Rahul Khubchandani"
+date: "11/14/2022"
+output: html_document
+---
+
+```{r}
+library(fpp)
+library(fpp2)
+library(forecast)
+
+plot(qauselec)
+Acf(qauselec)
+ndiffs(qauselec)
+tsdisplay(qauselec)
+kingtimeseriesdiff1 <- diff(qauselec, differences=1)
+plot(kingtimeseriesdiff1)
+tsdisplay(kingtimeseriesdiff1)
+auto_fit <- auto.arima(qauselec, trace=TRUE, stepwise = FALSE)
+auto_fit
+attributes(auto_fit)
+plot(forecast(auto_fit,h=5,level=c(99.5)))
+#Residual Analysis
+Acf(auto_fit$residuals)
+Box.test(residuals(auto_fit), lag=20, type="Ljung")
+plot.ts(residuals(auto_fit))
+hist(auto_fit$residuals)
+tsdiag(auto_fit)
+```
